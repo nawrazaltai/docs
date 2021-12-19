@@ -1,5 +1,5 @@
-## My script to config git inside virtual machine
-* In the script <name>, <email> and <editor> can be changed
+## My script to config Git inside virtual machine
+* In this specific script 'name', 'email' and 'editor' can be changed
 * Remember to not include <> when changing values
     ```
     User=("name=<ENTER GIT-USERNAME> email=<ENTER USER-EMAIL@GITHUB>")
@@ -111,6 +111,4 @@
 
     nothing to commit, working tree clean
     ninja@altai:~/ubuntu-server$
-    ```    
-    
-    
+    ```
