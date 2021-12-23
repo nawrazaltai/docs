@@ -1,81 +1,79 @@
-# Script to config Git, Git-push from VM with PAT and Git post-receive hook.
-
-#### User information:
+# Script to config Git, Git-push from VM with PAT and Git post-receive hook.  
+##### User information:
 * Keyboard-layout: Swedish
 * Username: ninja
 * Server-name: altai
 * Client machine prompt: Π
 * Server prompt: $
 
+
 ### My script to config Git inside virtual machine
 * The script is based on me (nawrazaltai) as the default user,
 * With that said, any user can use the script and change to their preferred configuration.
+ 
+    ```    
+    #!/bin/bash
 
-
-```    
-#!/bin/bash
-
-cd ~
-sudo apt install git
-git --version
-echo " "
-echo " "
-rm ~/.gitconfig
-
-while true; do
-User=("name=nawrazaltai" "email=nawraz.altai@chasacademy.se")
-Core=("editor=nano")
-echo "Your default Git-settings are set to:"
-echo "=========================================="
-echo "${User[0]}"
-echo "${User[1]}"
-echo "${Core[0]}"
-echo "=========================================="
-echo " "
-read -p "If you want to keep these settings press 1, if you want to change the settings press 2: " Choice
-echo " "
-
-if [ $Choice == 1 ]; then
-    echo "[user]" >> ~/.gitconfig
-    for i in ${User[@]}; do
-    echo $i >> ~/.gitconfig
-    done
-    echo " " >> ~/.gitconfig
-    echo "[core]" >> ~/.gitconfig
-    for i in ${Core[@]}; do
-    echo $i >> ~/.gitconfig
-    done
-    break
-elif [ $Choice == 2 ]; then
-    read -p "Please enter your Git-username: " gitname
-    read -p "Please enter your email on Github: " gitemail
-    read -p "Please enter your desired editor: " giteditor
-    Newuser=("name=$gitname" "email=$gitemail")
-    Newcore=("editor=$giteditor")
-
-    echo "[user]" >> ~/.gitconfig
-    for i in ${Newuser[@]}; do
-    echo $i >> ~/.gitconfig
-    done
-    echo " " >> ~/.gitconfig
-    echo "[core]" >> ~/.gitconfig
-    for i in ${Newcore[@]}; do
-    echo $i >> ~/.gitconfig
+    cd ~
+    sudo apt install git
+    git --version
     echo " "
-    echo "Your Git settings are now updated!"
-    done
-break
-else
-echo "Wrong input, please try again..."
-echo " "
-    continue
-fi
-done
-```    
+    echo " "
+    rm ~/.gitconfig
 
+    while true; do
+    User=("name=nawrazaltai" "email=nawraz.altai@chasacademy.se")
+    Core=("editor=nano")
+    echo "Your default Git-settings are set to:"
+    echo "=========================================="
+    echo "${User[0]}"
+    echo "${User[1]}"
+    echo "${Core[0]}"
+    echo "=========================================="
+    echo " "
+    read -p "If you want to keep these settings press 1, if you want to change the settings press 2: " Choice
+    echo " "
+
+    if [ $Choice == 1 ]; then
+        echo "[user]" >> ~/.gitconfig
+        for i in ${User[@]}; do
+        echo $i >> ~/.gitconfig
+        done
+        echo " " >> ~/.gitconfig
+        echo "[core]" >> ~/.gitconfig
+        for i in ${Core[@]}; do
+        echo $i >> ~/.gitconfig
+        done
+    break
+    elif [ $Choice == 2 ]; then
+        read -p "Please enter your Git-username: " gitname
+        read -p "Please enter your email on Github: " gitemail
+        read -p "Please enter your desired editor: " giteditor
+        Newuser=("name=$gitname" "email=$gitemail")
+        Newcore=("editor=$giteditor")
+
+        echo "[user]" >> ~/.gitconfig
+        for i in ${Newuser[@]}; do
+        echo $i >> ~/.gitconfig
+        done
+        echo " " >> ~/.gitconfig
+        echo "[core]" >> ~/.gitconfig
+        for i in ${Newcore[@]}; do
+        echo $i >> ~/.gitconfig
+        echo " "
+        echo "Your Git settings are now updated!"
+        done
+    break
+    else
+    echo "Wrong input, please try again..."
+    echo " "
+        continue
+    fi
+    done
+    ```    
 
 ### Git push from virtual machine with PAT
-* First step is to create a new directory and move in to it
+* First step is to create a new directory on the server and move in to it
     ```
     ninja@altai:~$ mkdir ubuntu-server
     ninja@altai:~$ cd ubuntu-server/
@@ -133,6 +131,7 @@ done
 
 * Back to the server to push the file
     * when asked for the password, here I pasted the PAT as password
+    
     ```
     Password for 'https://nawrazaltai@github.com': xxx_5RgmAXWlFxxv3T5QwdMu8EMqLeukhXXXXXXX
     ...
@@ -141,10 +140,11 @@ done
     Writing objects: 100% (3/3), 217 bytes | 217.00 KiB/s, done.
     Total 3 (delta 0), reused 0 (delta 0)
     To https://github.com/nawrazaltai/Ubuntu.git
-    * [new branch]      main -> main
+    [new branch]      main -> main
     Branch 'main' set up to track remote branch 'main' from 'origin'.
     ninja@altai:~/ubuntu-server$
     ```
+    
 * Finally I checked the status of my repo to make sure the push was correct
     ```
     ninja@altai:~/ubuntu-server$ git status
@@ -158,8 +158,8 @@ done
 ## Git post-recieve hook
 ##### Guides followed: 
 * https://daveceddia.com/deploy-git-repo-to-server/
-* https://drive.google.com/drive/shared-with-me
-
+* https://towardsdatascience.com/how-to-create-a-git-hook-to-push-to-your-server-and-github-repo-fe51f59122dd
+------------------------------------------------------------------------------
 
 * Start by connecting to the server via ssh
     ```
